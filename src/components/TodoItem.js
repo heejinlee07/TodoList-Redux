@@ -20,9 +20,11 @@ export default function TodoItem({ todo }) {
 
   const editTodo = async (id) => {
     try {
+      if (editInput === todo.name) return;
       const { data } = await api.put(`todos/${id}`, { name: editInput });
       dispatch({ type: EDIT_TODO, payload: data });
       console.log(data);
+      setEditInput("");
     } catch (e) {
       console.log("something wrong");
     }
@@ -37,7 +39,13 @@ export default function TodoItem({ todo }) {
         </span>{" "}
         {!editMode && (
           <>
-            <span style={{ color: "blue", cursor: "pointer" }} onClick={() => setEditMode(true)}>
+            <span
+              style={{ color: "blue", cursor: "pointer" }}
+              onClick={() => {
+                setEditMode(true);
+                setEditInput(todo.name);
+              }}
+            >
               Edit
             </span>
           </>

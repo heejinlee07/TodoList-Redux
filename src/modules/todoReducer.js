@@ -28,7 +28,15 @@ export default function todoReducer(state = initialState, action) {
     case DELETE_TODO:
       return { ...state, todos: state.todos.filter((todo) => todo.id !== action.id) };
     case EDIT_TODO:
-      return { state, todos: state.todos.concat(action.payload) };
+      return {
+        ...state,
+        todos: state.todos.map((todo) => {
+          if (todo.id === action.payload.id) {
+            return action.payload;
+          }
+          return todo;
+        }),
+      };
     default:
       return state;
   }
