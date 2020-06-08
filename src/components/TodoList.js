@@ -1,45 +1,41 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import TodoItem from "./TodoItem";
 import { api } from "../api/todosApi";
+import { SET_LOADING, SET_DATA, HAS_ERROR, ADD_TODO } from "../modules/todoReducer";
 
 export default function TodoList() {
   const [value, setValue] = useState("");
-  const [status, setStatus] = useState("idle");
-  const [todos, setTodos] = useState([]);
+  const todos = useSelector((state) => state.todos);
+  const status = useSelector((state) => state.status);
+
+  // 액션을 디스패치
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const setData = async () => {
-      setStatus("loading");
+      dispatch({ type: SET_LOADING });
 
       try {
         const { data } = await api.get("/todos");
-        setTodos(data);
-        setStatus("completed");
+        dispatch({ type: SET_DATA, payload: data });
+        console.log(data);
       } catch (e) {
-        setStatus("error");
+        dispatch({ type: HAS_ERROR });
       }
     };
     setData();
-  }, []);
-
-  const deleteTodo = async (id) => {
-    try {
-      const { data } = await api.delete(`/todos/${id}`);
-      setTodos((todos) => todos.filter((todo) => todo.id !== data.id));
-      setStatus("completed");
-    } catch (e) {
-      console.log("something wrong");
-    }
-  };
+  }, [dispatch]);
 
   return (
     <div>
       <div>
-        <input value={value} onChange={(e) => setValue(e.target.value)} />
+        <h2>Simple Todolist</h2>
+        <input value={value} placeholder="할 일을 입력하세요" onChange={(e) => setValue(e.target.value)} />
         <button
           onClick={async () => {
             const { data } = await api.post("/todos", { name: value });
-            setTodos([...todos, data]);
+            dispatch({ type: ADD_TODO, payload: data });
             setValue("");
           }}
         >
@@ -49,7 +45,7 @@ export default function TodoList() {
       <ul>
         {status === "loading" && <div>now loading...</div>}
         {status === "error" && <div>has error...</div>}
-        {status === "completed" && todos.map((todo) => <TodoItem key={todo.id} todo={todo} deleteTodo={deleteTodo} />)}
+        {status === "completed" && todos.map((todo) => <TodoItem key={todo.id} todo={todo} />)}
       </ul>
     </div>
   );
