@@ -1,0 +1,11 @@
+.SearchMovie {
+  display: flex;
+  flex-direction: column;
+}
+
+.SearchMovieList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}

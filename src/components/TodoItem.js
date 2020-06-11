@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { api } from "../api/todosApi";
+import { api } from "../utils/todosApi";
 import { EDIT_TODO, DELETE_TODO } from "../modules/todoReducer";
 
 export default function TodoItem({ todo }) {

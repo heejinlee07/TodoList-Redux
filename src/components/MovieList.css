@@ -1,0 +1,15 @@
+.MovieList {
+  display: flex;
+  flex-direction: column;
+}
+
+.MovieListButtonGroup > * {
+  margin: 5px;
+}
+
+.MovieListTotal {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}

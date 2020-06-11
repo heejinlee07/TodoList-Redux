@@ -10,8 +10,7 @@ export const EDIT_TODO = "EDIT_TODO";
 
 //초기상태
 const initialState = {
-  todos: [],
-  status: "idle",
+  todoData: [{ todos: [] }, { status: "idle" }],
 };
 
 //리듀서

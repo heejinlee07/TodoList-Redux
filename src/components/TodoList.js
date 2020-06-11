@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import TodoItem from "./TodoItem";
-import { api } from "../api/todosApi";
+import { api } from "../utils/todosApi";
 import { SET_LOADING, SET_DATA, HAS_ERROR, ADD_TODO } from "../modules/todoReducer";
 
 export default function TodoList() {
   const [value, setValue] = useState("");
-  const todos = useSelector((state) => state.todos);
-  const status = useSelector((state) => state.status);
+
+  const todos = useSelector(({ todos }) => todos.todoData.todos);
+  const status = useSelector(({ todos }) => todos.todoData.status);
+  // const todos = useSelector((state) => state.todos);
+  // const status = useSelector((state) => state.status);
 
   // 액션을 디스패치
   const dispatch = useDispatch();
@@ -50,3 +53,8 @@ export default function TodoList() {
     </div>
   );
 }
+
+/**
+ * Router 이동시에는 해당하지 않는 컴포넌트는 언마운트 되기 때문에
+ * 데이터를 보존하기 위해 redux를 사용했다.
+ */

@@ -1,0 +1,14 @@
+.ButtonStyle {
+  background-color: white;
+  color: black;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.ButtonStyle:hover {
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+}
