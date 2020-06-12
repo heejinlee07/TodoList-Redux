@@ -8,6 +8,7 @@ import { API_KEY } from "../utils/movieKey";
 import "./MovieList.css";
 import { MOVIE_SET_LOADING, MOVIE_HAS_ERROR, MOVIE_SET_DATA } from "../modules/movieReducer";
 import { useSelector, useDispatch } from "react-redux";
+import infinitieScroll from "react-infinite-scroll-component";
 
 //상수니까 대문자로 표현. key를 보기 좋게 정리.
 const MovieList = () => {

@@ -29,7 +29,7 @@ export default function App() {
         <Route path="/todolist">
           <TodoList />
         </Route>
-        <Route path="/movie">
+        <Route exact path="/movie">
           <MovieList />
         </Route>
         <Route path="/movie/:movieId">
