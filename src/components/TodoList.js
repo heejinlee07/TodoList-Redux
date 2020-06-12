@@ -7,10 +7,8 @@ import { SET_LOADING, SET_DATA, HAS_ERROR, ADD_TODO } from "../modules/todoReduc
 export default function TodoList() {
   const [value, setValue] = useState("");
 
-  const todos = useSelector(({ todos }) => todos.todoData.todos);
-  const status = useSelector(({ todos }) => todos.todoData.status);
-  // const todos = useSelector((state) => state.todos);
-  // const status = useSelector((state) => state.status);
+  const todos = useSelector(({ todos }) => todos.todos);
+  const status = useSelector(({ todos }) => todos.status);
 
   // 액션을 디스패치
   const dispatch = useDispatch();

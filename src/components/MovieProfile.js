@@ -3,7 +3,7 @@ import { API_KEY } from "../utils/movieKey";
 import { api } from "../utils/movieApi";
 import { useParams, useHistory } from "react-router-dom";
 
-import { SET_LOADING, HAS_ERROR, SET_PROFILE_DATA } from "../modules/movieReducer";
+import { MOVIE_SET_LOADING, MOVIE_HAS_ERROR, MOVIE_SET_PROFILE_DATA } from "../modules/movieReducer";
 import { useSelector, useDispatch } from "react-redux";
 
 import Button from "./Button/Button";
@@ -12,30 +12,32 @@ import "./MovieProfile.css";
 const MovieProfile = () => {
   const { movieId } = useParams();
   const history = useHistory();
-
+  console.log("실행됨?");
   const dispatch = useDispatch();
-  const movie = useSelector((state) => state.movie);
-  const status = useSelector((state) => state.status);
+  const movie = useSelector(({ movies }) => movies.movie);
+  const status = useSelector(({ movies }) => movies.status);
+
+  const params = useParams();
+  console.log(params);
 
   useEffect(() => {
     async function getMovieList(id) {
-      if (movie && movie.id === parseInt(movieId, 10)) return;
+      // if (movie && movie.id === parseInt(movieId, 10)) return;
 
-      dispatch({ type: SET_LOADING });
+      dispatch({ type: MOVIE_SET_LOADING });
 
       try {
         const { data } = await api.get(`/movie/${movieId}?api_key=${API_KEY}`);
-        console.log("객체", data);
-        console.log("배열", data.data);
-        console.log("text", data.id);
-        dispatch({ type: SET_PROFILE_DATA, payload: data });
+        console.log("상세페이지 객체", data);
+        console.log("상세페이지 배열", data.data);
+        console.log("상세페이지 id", data.id);
+        dispatch({ type: MOVIE_SET_PROFILE_DATA, payload: data });
       } catch (e) {
-        dispatch({ type: HAS_ERROR });
+        dispatch({ type: MOVIE_HAS_ERROR });
       }
     }
     getMovieList();
-  }, [movieId, dispatch, movie]);
-
+  }, [movieId, dispatch]);
   /**
    * Title, Overview, Genres, release_date, poster_path
    */

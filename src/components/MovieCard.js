@@ -4,7 +4,7 @@ import "./MovieCard";
 
 const MovieCard = ({ movie }) => {
   const { title, vote_count, poster_path, id } = movie;
-
+  console.log("info", movie);
   return (
     <div className="Card">
       <Link to={`/movie/${id}`}>{title}</Link>

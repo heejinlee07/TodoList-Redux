@@ -6,7 +6,7 @@ import { api } from "../utils/movieApi";
 import { API_KEY } from "../utils/movieKey";
 
 import "./MovieList.css";
-import { SET_LOADING, HAS_ERROR, SET_DATA } from "../modules/movieReducer";
+import { MOVIE_SET_LOADING, MOVIE_HAS_ERROR, MOVIE_SET_DATA } from "../modules/movieReducer";
 import { useSelector, useDispatch } from "react-redux";
 
 //상수니까 대문자로 표현. key를 보기 좋게 정리.
@@ -14,22 +14,27 @@ const MovieList = () => {
   // const [movies, setMovies] = useState([]);
   const [type, setType] = useState("now_playing");
 
-  const status = useSelector((state) => state.status);
-  const movies = useSelector((state) => state.movies);
+  // const status = useSelector((state) => state.movies.status);
+  // const movies = useSelector((state) => state.movies.movies);
 
+  const status = useSelector(({ movies }) => movies.status);
+  const movies = useSelector(({ movies }) => movies.movies);
+
+  console.log("before status", status);
+  console.log("before movies", movies);
   const dispatch = useDispatch();
 
   useEffect(() => {
     async function getMovieList() {
-      if (movies && movies.length > 0) return;
+      // if (movies && movies.length > 0) return;
 
-      dispatch({ type: SET_LOADING });
+      dispatch({ type: MOVIE_SET_LOADING });
 
       try {
         const { data } = await api.get(`/movie/${type}?api_key=${API_KEY}`);
         console.log("data: 객체", data);
         console.log("results: 배열", data.results);
-        dispatch({ type: SET_DATA, payload: data.results });
+        dispatch({ type: MOVIE_SET_DATA, payload: data.results });
         /**
          * 비구조화할당하기 이전에 일단 const data와 같이 변수에 할당한 후
          * console에 찍어본다. 그리고 비구조화할당을 한다.
@@ -40,17 +45,20 @@ const MovieList = () => {
          * 비구조화할당을 해서 꺼내오면 코드 중복을 줄일 수 있다.
          */
       } catch (e) {
-        dispatch({ type: HAS_ERROR });
+        dispatch({ type: MOVIE_HAS_ERROR });
       }
     }
     getMovieList();
-  }, [type, dispatch, movies]);
+  }, [type, dispatch]);
+
+  console.log("after status", status);
+  console.log("after moives", movies);
 
   //[] 들어가는 것은 그 안에 있는 것이 바뀔떄만 실행되는 것.바뀌는 값이 있다면 넣어준다.
   // https://ko.reactjs.org/docs/hooks-effect.html
   // getMovieList를 왜 여기서 호출해야하는지?
   //키워드: useEffct, async, await로 검색.
-  //useEffect는 async-awita함수를 쓸 수 없음. 그래서 안에 만들어 놓고,
+  //useEffect는 async-await함수를 쓸 수 없음. 그래서 안에 만들어 놓고,
   //호출을 동시에 실행.혹은 즉시실행함수를 사용해도 된다.
   return (
     <div className="MovieList">
