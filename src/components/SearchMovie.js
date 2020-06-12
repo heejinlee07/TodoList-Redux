@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { api } from "../utils/movieApi";
 import { API_KEY } from "../utils/movieKey";
-
 import MovieCard from "./MovieCard";
-import Input from "./Input/Input";
 
 import "./SearchMovie.css";
 
