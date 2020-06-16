@@ -14,7 +14,7 @@ import infinitieScroll from "react-infinite-scroll-component";
 const MovieList = () => {
   // const [movies, setMovies] = useState([]);
   const [type, setType] = useState("now_playing");
-
+  const [language, setLanguage] = useState("en-EN");
   // const status = useSelector((state) => state.movies.status);
   // const movies = useSelector((state) => state.movies.movies);
 
@@ -32,7 +32,7 @@ const MovieList = () => {
       dispatch({ type: MOVIE_SET_LOADING });
 
       try {
-        const { data } = await api.get(`/movie/${type}?api_key=${API_KEY}`);
+        const { data } = await api.get(`/movie/${type}?api_key=${API_KEY}&language=${language}`);
         console.log("data: 객체", data);
         console.log("results: 배열", data.results);
         dispatch({ type: MOVIE_SET_DATA, payload: data.results });
@@ -50,7 +50,7 @@ const MovieList = () => {
       }
     }
     getMovieList();
-  }, [type, dispatch]);
+  }, [type, dispatch, language]);
 
   console.log("after status", status);
   console.log("after moives", movies);
@@ -62,17 +62,21 @@ const MovieList = () => {
   //useEffect는 async-await함수를 쓸 수 없음. 그래서 안에 만들어 놓고,
   //호출을 동시에 실행.혹은 즉시실행함수를 사용해도 된다.
   return (
-    <div className="MovieList">
-      {status === "loading" && <h1>Now Loading...</h1>}
-      {status === "error" && <h1>Error Occured...</h1>}
-      <div className="MovieListButtonGroup">
-        <Button onClick={() => setType("now_playing")}>최신순으로 보기</Button>
-        <Button onClick={() => setType("popular")}>인기순으로 보기</Button>
+    <>
+      <button onClick={() => setLanguage("ko-KR")}>한국어</button>
+      <button onClick={() => setLanguage("en-ER")}>영어</button>
+      <div className="MovieList">
+        {status === "loading" && <h1>Now Loading...</h1>}
+        {status === "error" && <h1>Error Occured...</h1>}
+        <div className="MovieListButtonGroup">
+          <Button onClick={() => setType("now_playing")}>최신순으로 보기</Button>
+          <Button onClick={() => setType("popular")}>인기순으로 보기</Button>
+        </div>
+        <div className="MovieListTotal">
+          {status === "completed" && movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+        </div>
       </div>
-      <div className="MovieListTotal">
-        {status === "completed" && movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
-      </div>
-    </div>
+    </>
   );
 };
 
