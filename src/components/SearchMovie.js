@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { api } from "../utils/movieApi";
 import { API_KEY } from "../utils/movieKey";
 import MovieCard from "./MovieCard";
+import { useSelector } from "react-redux";
 
 import "./SearchMovie.css";
 
@@ -11,13 +12,15 @@ const SearchMovie = () => {
   const [isLoading, setLoading] = useState(false);
   const [hasError, setError] = useState(false);
 
+  const language = useSelector(({ movies }) => movies.language);
+
   useEffect(() => {
     async function getMovieList() {
       setLoading(true);
       // console.log(value); 를 찍어보면 바뀌는 내용을 알 수 있다.
       // dependency array에 의존성이 등록되어 있기 때문이다.
       try {
-        const { data } = await api.get(`/search/movie?api_key=${API_KEY}&query=${value}`);
+        const { data } = await api.get(`/search/movie?api_key=${API_KEY}&query=${value}&language=${language}`);
         //쿼리와 api키는 반드시 필요
         // console.log(data.results);
         setMovies(data.results);
@@ -31,7 +34,7 @@ const SearchMovie = () => {
     if (value !== "") {
       getMovieList();
     }
-  }, [value]);
+  }, [value, language]);
 
   //value가 바뀔때마다 useEffect실행.
   return (

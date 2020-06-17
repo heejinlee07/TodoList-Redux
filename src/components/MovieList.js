@@ -14,12 +14,12 @@ import infinitieScroll from "react-infinite-scroll-component";
 const MovieList = () => {
   // const [movies, setMovies] = useState([]);
   const [type, setType] = useState("now_playing");
-  const [language, setLanguage] = useState("en-EN");
   // const status = useSelector((state) => state.movies.status);
   // const movies = useSelector((state) => state.movies.movies);
 
   const status = useSelector(({ movies }) => movies.status);
   const movies = useSelector(({ movies }) => movies.movies);
+  const language = useSelector(({ movies }) => movies.language);
 
   console.log("before status", status);
   console.log("before movies", movies);
@@ -63,8 +63,6 @@ const MovieList = () => {
   //호출을 동시에 실행.혹은 즉시실행함수를 사용해도 된다.
   return (
     <>
-      <button onClick={() => setLanguage("ko-KR")}>한국어</button>
-      <button onClick={() => setLanguage("en-ER")}>영어</button>
       <div className="MovieList">
         {status === "loading" && <h1>Now Loading...</h1>}
         {status === "error" && <h1>Error Occured...</h1>}

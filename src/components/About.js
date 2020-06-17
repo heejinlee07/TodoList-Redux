@@ -15,7 +15,7 @@ export default function About() {
    */
 
   const params = useParams();
-  console.log(params);
+  console.log('about', params);
 
   return (
     <div>

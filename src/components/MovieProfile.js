@@ -16,7 +16,7 @@ const MovieProfile = () => {
   const dispatch = useDispatch();
   const movie = useSelector(({ movies }) => movies.movie);
   const status = useSelector(({ movies }) => movies.status);
-
+  const language = useSelector(({ movies }) => movies.language);
   const params = useParams();
   console.log(params);
 
@@ -27,7 +27,7 @@ const MovieProfile = () => {
       dispatch({ type: MOVIE_SET_LOADING });
 
       try {
-        const { data } = await api.get(`/movie/${movieId}?api_key=${API_KEY}`);
+        const { data } = await api.get(`/movie/${movieId}?api_key=${API_KEY}&language=${language}`);
         console.log("상세페이지 객체", data);
         console.log("상세페이지 배열", data.data);
         console.log("상세페이지 id", data.id);
@@ -37,7 +37,7 @@ const MovieProfile = () => {
       }
     }
     getMovieList();
-  }, [movieId, dispatch]);
+  }, [movieId, dispatch, language]);
   /**
    * Title, Overview, Genres, release_date, poster_path
    */
