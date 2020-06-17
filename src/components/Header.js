@@ -3,15 +3,24 @@ import { Link } from "react-router-dom";
 import Button from "./Button/Button";
 import { useDispatch } from "react-redux";
 import { MOVIE_SET_LANGUAGE } from "../modules/movieReducer";
+import "./Header.css";
 
 export default function Header() {
   const dispatch = useDispatch();
 
   return (
     <>
-      <h1>welcome</h1>
-      <Button onClick={() => dispatch({ type: MOVIE_SET_LANGUAGE, payload: "ko-KR" })}>한국어</Button>
-      <Button onClick={() => dispatch({ type: MOVIE_SET_LANGUAGE, payload: "en-ER" })}>영어</Button>
+      <div className="title">
+        <h1>use Redux Practice</h1>
+      </div>
+      <div className="langButtonStyle">
+        <span className="langButton" onClick={() => dispatch({ type: MOVIE_SET_LANGUAGE, payload: "ko-KR" })}>
+          한국어
+        </span>
+        <span className="langButton" onClick={() => dispatch({ type: MOVIE_SET_LANGUAGE, payload: "en-ER" })}>
+          영어
+        </span>
+      </div>
       <div style={{ display: "flex", justifyContent: "space-evenly" }}>
         <Link to="/">
           <Button>홈으로</Button>

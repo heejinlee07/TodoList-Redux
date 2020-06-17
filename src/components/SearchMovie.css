@@ -9,3 +9,8 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.inputStyle {
+  width: 350px;
+  height: 25px;
+}

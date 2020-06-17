@@ -12,3 +12,24 @@
   color: white;
   border: 1px solid black;
 }
+
+.langButton {
+  cursor: pointer;
+  width: 50px;
+  margin: 5px;
+  border-radius: 10px;
+  border: 1px solid black;
+  text-align: center;
+  padding: 5px;
+}
+
+.langButtonStyle {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.langButton:hover {
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+}

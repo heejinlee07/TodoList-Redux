@@ -39,7 +39,12 @@ const SearchMovie = () => {
   //value가 바뀔때마다 useEffect실행.
   return (
     <div className="SearchMovie">
-      <input placeholder="검색할 영화 이름을 넣어주세요" value={value} onChange={(e) => setValue(e.target.value)} />
+      <input
+        className="inputStyle"
+        placeholder="검색할 영화 이름을 넣어주세요"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
       {value === "" && <h1>값을 입력해 주세요</h1>}
       {isLoading && <h1>Now Loading...</h1>}
       {hasError && <h1>Error Occured...</h1>}
